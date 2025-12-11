@@ -9,6 +9,13 @@ SCENARIOS_FILE = "scenarios.json"
 TAG = "Parallel_test"
 TEMP_DIR = "temp_parallel_features"
 
+# ALL BASE DIRS HERE
+BASE_DIRS = [
+    "-b", "PageOperations",
+    "-b", "Util",
+    "-b", "StepDefn"
+]
+
 def load_scenarios():
     with open(SCENARIOS_FILE) as f:
         data = json.load(f)
@@ -49,7 +56,10 @@ def prepare_temp_files(selected):
 
 def run_scenario_file(feature_file):
     print(f"🚀 Running {feature_file}")
-    result = subprocess.run(["radish", feature_file])
+
+    cmd = ["radish", feature_file] + BASE_DIRS
+
+    result = subprocess.run(cmd)
     return result.returncode
 
 
